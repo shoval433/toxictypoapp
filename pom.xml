@@ -50,7 +50,7 @@
     <build>
         <plugins>
         <!-- af -->
-        <plugin>
+        <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.2.0</version>
@@ -61,7 +61,7 @@
             </manifest>
           </archive>
         </configuration>
-      </plugin>
+      </plugin> -->
       <!-- af -->
         <plugin>
             <groupId>com.spotify</groupId>
