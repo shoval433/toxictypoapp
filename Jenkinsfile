@@ -38,19 +38,20 @@ pipeline{
                     echo "======================================================================================================================================================================"
                     // sh "docker rm -f app "
                     // sh "docker rm -f testing"
+                    //toxictypoapp:1.0-SNAPSHOT
                     configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
                     sh "mvn -s ${set} verify "
                     }
                     echo "======================================================================================================================================================================"
 
-                    // sh "docker build --tag app-img ."
-                    // sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
                     
-                    // sh "docker build -t testing-img ./src/test/" 
-                    // sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
+                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
                     
-                    // res=sh (script: "bash testing.sh ",
-                    // returnStdout: true).trim()
+                    sh "docker build -t testing-img ./src/test/" 
+                    sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
+                    
+                    res=sh (script: "bash testing.sh ",
+                    returnStdout: true).trim()
 
                     //7 tests performed
                     ///////////////////
