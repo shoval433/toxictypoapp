@@ -45,7 +45,7 @@ pipeline{
                 
                     
                     sh "docker build -t testing-img ./src/test/" 
-                    sh "docker run -it --rm  --name testing --network ubuntu_default testing-img bash"
+                    sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
                     
                     // res=sh (script: "bash testing.sh ",
                     // returnStdout: true).trim()
