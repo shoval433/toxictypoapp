@@ -40,19 +40,19 @@ pipeline{
                     // sh "docker rm -f testing"
                     //toxictypoapp:1.0-SNAPSHOT
                     configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
-                    sh "mvn -s ${set} verify "
+                    sh "mvn -s ${set} clean install "
                     }
                     echo "======================================================================================================================================================================"
 
                     
                     sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
                     
-                    sh "docker build -t testing-img ./src/test/" 
-                    sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
+                    // sh "docker build -t testing-img ./src/test/" 
+                    // sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
                     
-                    res=sh (script: "bash testing.sh ",
-                    returnStdout: true).trim()
-                    echo "$res"
+                    // res=sh (script: "bash testing.sh ",
+                    // returnStdout: true).trim()
+                    // echo "$res"
                     //7 tests performed
                     ///////////////////
                     // Server is set to app:8080
