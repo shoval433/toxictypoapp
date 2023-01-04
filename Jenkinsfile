@@ -38,7 +38,7 @@ pipeline{
                     echo "======================================================================================================================================================================"
                     // sh "docker rm -f app "
                     // sh "docker rm -f testing"
-                    onfigFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
+                    configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
                     sh "mvn -s ${set} verify "
                     }
                     echo "======================================================================================================================================================================"
