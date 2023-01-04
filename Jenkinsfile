@@ -9,6 +9,9 @@ pipeline{
         maven 'my-work-maven'
         jdk 'java-8-work'
     }
+    environment{
+        def res="not work"
+    }
     stages{
         stage("CHEKOUT"){
             steps{
@@ -25,11 +28,18 @@ pipeline{
                 // sh 'printenv'
             }
         }
+        
+    
         stage("Testing for all"){
             steps{
+
                 script{
+                    sh "export network=ubuntu_default "
+                    sh "docker bulid -t app-img ."
+                    sh "docker run -d app --network ${network} -p 8083:8080 --name app app-img "
                     res=sh (script: "cd /src/test && bash testing.sh ",
                     returnStdout: true).trim()
+
                     //7 tests performed
                     ///////////////////
                     // Server is set to app:8080
@@ -37,20 +47,34 @@ pipeline{
                     // Wait time is set to 5
                     // Waiting 5 seconds before starting to send test messages...
                     // 7 tests performed in 0:00:05.13.
+                    
+
+
+                    //docker run -dit --name toxi2 -p 8083:8080 --network ubuntu_default  toxi_img bash
                 }
             }
 
         }
-        stage("is main"){
+        stage("is pass"){
             when{
                 expression{
-                    return GIT_BRANCH.contains('main') 
+                    return res.contains('7 tests performed') 
                 }
             }
             steps{
-                sh "mvn verify"
+                echo "that work"
             }
         }
+        // stage("is main"){
+        //     when{
+        //         expression{
+        //             return GIT_BRANCH.contains('main') 
+        //         }
+        //     }
+        //     steps{
+        //         sh "mvn verify"
+        //     }
+        // }
     //     //
     //     stage("is a release"){
     //         when{
