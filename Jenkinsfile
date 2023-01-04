@@ -36,7 +36,7 @@ pipeline{
                 script{
                     
                     echo "======================================================================================================================================================================"
-                    // sh "docker rm -f app "
+                    sh "docker rm -f app "
                     // sh "docker rm -f testing"
                     //toxictypoapp:1.0-SNAPSHOT
                     configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
