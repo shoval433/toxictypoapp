@@ -41,12 +41,14 @@ pipeline{
                     echo "======================================================================================================================================================================"
 
                     sh "docker build --tag app-img ."
-                    echo "======================================================================================================================================================================"
                     sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
-                    echo "======================================================================================================================================================================"
-                    // sh "cd /src/test"
-                    res=sh (script: "bash /src/test/testing.sh ",
-                    returnStdout: true).trim()
+                    sh """
+                        cd src/test
+                        docker build -t testing-img . >/dev/null
+                        docker run -it --rm  --name testing --network ${network} testing-img bash
+                    """
+                    // res=sh (script: "bash testing.sh ",
+                    // returnStdout: true).trim()
 
                     //7 tests performed
                     ///////////////////
