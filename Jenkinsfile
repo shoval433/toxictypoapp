@@ -41,7 +41,7 @@ pipeline{
                     echo "======================================================================================================================================================================"
 
                     sh "docker build --tag app-img ."
-                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
+                    sh "docker run --name app --network ubuntu_default -p 8083:8080  app-img "
                 
                     
                     // sh "docker build -t testing-img ./src/test/" 
