@@ -35,7 +35,7 @@ pipeline{
 
                 script{
                     sh "export network=ubuntu_default "
-                    sh "docker bulid -t app-img ."
+                    sh "docker build --tag app-img ."
                     sh "docker run -d app --network ${network} -p 8083:8080 --name app app-img "
                     res=sh (script: "cd /src/test && bash testing.sh ",
                     returnStdout: true).trim()
