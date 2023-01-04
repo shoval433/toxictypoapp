@@ -1,4 +1,4 @@
-FROM python:2.7.18-stretch
+FROM python:2.7
 COPY requirments.txt .
 RUN pip install -r requirments.txt
 COPY e2e .
