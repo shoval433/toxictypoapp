@@ -52,7 +52,7 @@ pipeline{
                     
                     res=sh (script: "bash testing.sh ",
                     returnStdout: true).trim()
-
+                    echo "$res"
                     //7 tests performed
                     ///////////////////
                     // Server is set to app:8080
