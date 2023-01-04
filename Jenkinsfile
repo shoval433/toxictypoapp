@@ -25,22 +25,32 @@ pipeline{
                 // sh 'printenv'
             }
         }
-        stage("Building for all"){
+        stage("Testing for all"){
             steps{
-                sh "mvn verify"
+                script{
+                    res=sh (script: "cd /src/test && bash testing.sh ",
+                    returnStdout: true).trim()
+                    //7 tests performed
+                    ///////////////////
+                    // Server is set to app:8080
+                    // Test level is set to sanity
+                    // Wait time is set to 5
+                    // Waiting 5 seconds before starting to send test messages...
+                    // 7 tests performed in 0:00:05.13.
+                }
             }
 
         }
-        // stage("is main"){
-        //     when{
-        //         expression{
-        //             return GIT_BRANCH.contains('main') 
-        //         }
-        //     }
-        //     steps{
-        //         echo "is main"
-        //     }
-        // }
+        stage("is main"){
+            when{
+                expression{
+                    return GIT_BRANCH.contains('main') 
+                }
+            }
+            steps{
+                sh "mvn verify"
+            }
+        }
     //     //
     //     stage("is a release"){
     //         when{
