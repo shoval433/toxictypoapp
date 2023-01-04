@@ -36,13 +36,15 @@ pipeline{
                 script{
                     
                     echo "======================================================================================================================================================================"
-                    sh "docker rm -f app "
+                    // sh "docker rm -f app "
                     // sh "docker rm -f testing"
+                    onfigFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
+                    sh "mvn -s ${set} verify "
+                    }
                     echo "======================================================================================================================================================================"
 
-                    sh "docker build --tag app-img ."
-                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
-                
+                    // sh "docker build --tag app-img ."
+                    // sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
                     
                     // sh "docker build -t testing-img ./src/test/" 
                     // sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
