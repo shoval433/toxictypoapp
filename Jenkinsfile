@@ -41,7 +41,7 @@ pipeline{
 
                     sh "docker build --tag app-img ."
                     echo "======================================================================================================================================================================"
-                    sh "docker run -d app --network ubuntu_default -p 8083:8080 --name app app-img "
+                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
                     echo "======================================================================================================================================================================"
                     res=sh (script: "cd /src/test && bash testing.sh ",
                     returnStdout: true).trim()
