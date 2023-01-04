@@ -45,7 +45,7 @@ pipeline{
                     sh "docker run -d --name app --network ubuntu_default -p 8083:8080  app-img "
                     echo "======================================================================================================================================================================"
                     sh "ls"
-                    res=sh (script: "cd /src/test && bash testing.sh ",
+                    res=sh (script: "cd /src && bash testing.sh ",
                     returnStdout: true).trim()
 
                     //7 tests performed
