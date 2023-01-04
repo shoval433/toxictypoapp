@@ -40,7 +40,7 @@ pipeline{
                     // sh "docker rm -f testing"
                     //toxictypoapp:1.0-SNAPSHOT
                     configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
-                    sh "mvn -s ${set} clean install "
+                    sh "mvn -s ${set} deploy "
                     }
                     echo "======================================================================================================================================================================"
 
