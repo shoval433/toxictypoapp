@@ -29,32 +29,7 @@ pipeline{
             }
         }
         
-    
-        stage("Testing for all"){
-            steps{
 
-                script{
-                    
-                   
-                    
-                    // res=sh (script: "bash testing.sh ",
-                    // returnStdout: true).trim()
-                    // echo "$res"
-                    //7 tests performed
-                    ///////////////////
-                    // Server is set to app:8080
-                    // Test level is set to sanity
-                    // Wait time is set to 5
-                    // Waiting 5 seconds before starting to send test messages...
-                    // 7 tests performed in 0:00:05.13.
-                    
-
-
-                    //docker run -dit --name toxi2 -p 8083:8080 --network ubuntu_default  toxi_img bash
-                }
-            }
-
-        }
         stage("is pass"){
             when{
                 anyOf {
