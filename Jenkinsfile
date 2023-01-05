@@ -47,8 +47,8 @@ pipeline{
                     
                     sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
                     
-                    // sh "docker build -t testing-img ./src/test/" 
-                    // sh "docker run --rm --name testing --network ubuntu_default testing-img bash"
+                    sh "docker build -t testing-img ./src/test/" 
+                    sh "docker run --rm --name testing --network ubuntu_default testing-img"
                     
                     // res=sh (script: "bash testing.sh ",
                     // returnStdout: true).trim()
