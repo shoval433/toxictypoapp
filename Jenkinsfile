@@ -86,7 +86,7 @@ pipeline{
                 }
             }
             steps{
-                sh "mvn verify"
+                sh "mainmain"
             }
         }
     //     //
