@@ -35,20 +35,7 @@ pipeline{
 
                 script{
                     
-                    echo "======================================================================================================================================================================"
-                    sh "docker rm -f app "
-                    // sh "docker rm -f testing"
-                    //toxictypoapp:1.0-SNAPSHOT
-                    configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
-                    sh "mvn -s ${set} verify"
-                    }
-                    echo "======================================================================================================================================================================"
-
-                    
-                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
-                    
-                    sh "docker build -t testing-img ./src/test/" 
-                    sh "docker run --rm --name testing --network ubuntu_default testing-img"
+                   
                     
                     // res=sh (script: "bash testing.sh ",
                     // returnStdout: true).trim()
@@ -73,23 +60,46 @@ pipeline{
                 anyOf {
                         branch "main"
                         branch "feature/*"
+                        branch "master"
                 }
             } 
              steps{
-                echo "test"
+                script{
+                    echo "======================================================================================================================================================================"
+                    sh "docker rm -f app "
+                    // sh "docker rm -f testing"
+                    //toxictypoapp:1.0-SNAPSHOT
+                    configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
+                    sh "mvn -s ${set} verify"
+                    }
+                    echo "======================================================================================================================================================================"
+
+                    
+                    sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
+                    
+                    sh "docker build -t testing-img ./src/test/" 
+                    sh "docker run --rm --name testing --network ubuntu_default testing-img"
+                }
             }
         }
-        stage("is main"){
+        stage("is pass"){
             when{
-                expression{
-                    return (GIT_BRANCH=='main') 
+                anyOf {
+                        branch "main"
+                        branch "master"
                 }
             }
             steps{
-                sh "mainmain"
-            }
+                script{
+                    sh "docker tag app shoval_private_ecr:toxi"
+                    docker.withRegistry("http://644435390668.dkr.ecr.eu-west-3.amazonaws.com/shoval_private_ecr", "ecr:eu-west-3:644435390668") {
+                    docker.image("shoval_private_ecr:toxi").push()
+                    }
+                }
+            } 
+
         }
-    //     //
+
     //     stage("is a release"){
     //         when{
     //             expression{
