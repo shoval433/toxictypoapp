@@ -75,53 +75,26 @@ pipeline{
             } 
 
         }
+        stage("is main"){
+            when{
+                anyOf {
+                        branch "main"
+                        branch "master"
+                }
+            }
+            steps{
+                script{
+                    sh """ 
+                        ssh ubuntu@43.0.10.85 "docker rm -f prod"
+                        ssh ubuntu@43.0.10.85 "aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-west-3.amazonaws.com"
+                        ssh ubuntu@43.0.10.85 "docker run -d --name prod -p 80:8080  644435390668.dkr.ecr.eu-west-3.amazonaws.com/shoval_toxi:toxictypoapp"
+                    """
+                    }
+                }
+            } 
 
-    //     stage("is a release"){
-    //         when{
-    //             expression{
-    //                 return GIT_BRANCH.contains('release/')
-    //             }
-    //         }
-    //         steps{
-    //             echo "===============================================Executing Calc==============================================="
-    //             script{
-    //                 Ver_Br=sh (script: "echo $GIT_BRANCH | cut -d '/' -f2",
-    //                 returnStdout: true).trim()
-    //                 echo "${Ver_Br}"
-    //                 Ver_Calc=sh (script: "bash calc.sh ${Ver_Br}",
-    //                 returnStdout: true).trim()
-    //                 echo "${Ver_Calc}"
+        }
 
-    //             }     
-                
-    //         }
-           
-    //     }
-    //     stage("is a release2"){
-    //         when{
-    //             expression{
-    //                 return GIT_BRANCH.contains('release/')
-    //             }
-    //         }
-            
-    //         steps{
-    //             echo "===============================================Executing Push==============================================="
-    //             configFileProvider([configFile(fileId: 'my_settings.xml', variable: 'set')]) {
-    //                 sh "mvn versions:set -DnewVersion=${Ver_Calc} && mvn -s ${set} deploy "
-    //                 }
-    //             script{
-    //                 withCredentials([gitUsernamePassword(credentialsId: '2053d2c3-e0ab-4686-b031-9a1970106e8d', gitToolName: 'Default')]){
-    //                         // sh "git checkout release/${VER}"
-    //                         sh "git tag $Ver_Calc"
-    //                         sh "git push origin $Ver_Calc"
-                    
-    //                     }
-    //             }
-
-    // //
-    //         }
-           
-    //     }
     }
     post{
         always{
