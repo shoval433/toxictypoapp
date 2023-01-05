@@ -67,9 +67,9 @@ pipeline{
             }
             steps{
                 script{
-                    sh "docker tag app shoval_private_ecr:toxi"
+                    sh "docker tag toxictypoapp:1.0-SNAPSHOT shoval_private_ecr:toxictypoapp"
                     docker.withRegistry("http://644435390668.dkr.ecr.eu-west-3.amazonaws.com/shoval_private_ecr", "ecr:eu-west-3:644435390668") {
-                    docker.image("shoval_private_ecr:toxi").push()
+                    docker.image("shoval_private_ecr:toxictypoapp").push()
                     }
                 }
             } 
