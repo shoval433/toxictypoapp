@@ -70,24 +70,25 @@ pipeline{
         }
         stage("is pass"){
             when{
+                anyOf {
+                        branch "main"
+                        branch "feature/*"
+                }
+            } 
+            stages{
+                echo "test"
+            }
+        }
+        stage("is main"){
+            when{
                 expression{
-                    return res.contains('7 tests performed') 
+                    return (GIT_BRANCH=='main') 
                 }
             }
             steps{
-                echo "that work"
+                sh "mvn verify"
             }
         }
-        // stage("is main"){
-        //     when{
-        //         expression{
-        //             return GIT_BRANCH.contains('main') 
-        //         }
-        //     }
-        //     steps{
-        //         sh "mvn verify"
-        //     }
-        // }
     //     //
     //     stage("is a release"){
     //         when{
