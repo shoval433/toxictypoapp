@@ -125,6 +125,7 @@ pipeline{
     }
     post{
         always{
+            sh "docker rm -f app "
             echo "========always========"
         }
         success{
