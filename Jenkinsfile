@@ -58,7 +58,7 @@ pipeline{
                 }
             }
         }
-        stage("is main"){
+        stage("is deploy to prod"){
             when{
                 anyOf {
                         branch "main"
@@ -90,7 +90,7 @@ pipeline{
                         ssh ubuntu@43.0.10.85 "docker run -d --name prod -p 80:8080  644435390668.dkr.ecr.eu-west-3.amazonaws.com/shoval_toxi:toxictypoapp"
                     """
                     }
-                }
+               
             } 
 
         }
