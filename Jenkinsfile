@@ -30,7 +30,7 @@ pipeline{
         }
         
 
-        stage("is pass"){
+        stage("is all"){
             when{
                 anyOf {
                         branch "main"
@@ -38,7 +38,8 @@ pipeline{
                         branch "master"
                 }
             } 
-             steps{
+            
+            steps{
                 script{
                     echo "======================================================================================================================================================================"
                     sh "docker rm -f app "
@@ -57,7 +58,7 @@ pipeline{
                 }
             }
         }
-        stage("is pass"){
+        stage("is main"){
             when{
                 anyOf {
                         branch "main"
