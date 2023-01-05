@@ -67,7 +67,7 @@ pipeline{
             }
             steps{
                 script{
-                    sh "docker tag toxictypoapp:1.0-SNAPSHOT shoval_private_ecr:toxictypoapp"
+                    sh "docker tag toxictypoapp:1.0-SNAPSHOT shoval_toxi:toxictypoapp"
                     docker.withRegistry("http://644435390668.dkr.ecr.eu-west-3.amazonaws.com/shoval_toxi", "ecr:eu-west-3:644435390668") {
                     docker.image("shoval_toxi:toxictypoapp").push()
                     }
