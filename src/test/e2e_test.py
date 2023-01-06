@@ -9,6 +9,9 @@ import random
 import requests
 import sys
 import time
+from multiprocessing.dummy import Pool as ThreadPool
+
+# function to be mapped over
 
 def hms_string(sec_elapsed):
     h = int(sec_elapsed / (60 * 60))
@@ -34,6 +37,10 @@ def test(expect,send,srv):
     if not success: print "Failure: Expected %s and got %s"%(expect,suggestion)
     return success
 
+def ptest(l):
+  words = l.strip().split("->")
+  return test(words[1],words[0],server)
+
 def getArg(args,name,i,d):
     ret = d
     if len(args)>i:
@@ -54,19 +61,17 @@ if wt>0:
 i=0
 b=0
 ret=0
-f=open(testFile,"r")
-for line in f:
-    i+=1
-    if (i%50)==0:
-        print "%d tests and counting..."%i
-    words = line.strip().split("->")
-    if not test(words[1],words[0],server):
-        ret=1
-        b+=1
 
+testCases = [line.rstrip('\n') for line in open(testFile,"r")]
+
+pool = ThreadPool(100)
+results = pool.map(ptest, testCases)
+pool.close()
+pool.join()
 
 end_time = time.time()
-print "{} tests performed in {}.".format(i,hms_string(end_time - start_time))
+print "{} tests performed in {}.".format(len(results),hms_string(end_time - start_time))
+b=results.count(False)
 if b>0:
     print "{} failures!".format(b)
 exit(ret)
