@@ -50,7 +50,8 @@ pipeline{
                     }
                     echo "======================================================================================================================================================================"
 
-                    
+                     sh "docker rm -f app "
+
                     sh "docker run -d --name app --network ubuntu_default -p 8083:8080 toxictypoapp:1.0-SNAPSHOT "
                     
                     sh "docker build -t testing-img ./src/test/" 
@@ -108,7 +109,7 @@ pipeline{
     }
     post{
         always{
-            sh "docker rm -f app "
+            sh "docker rm -f testing"
             echo "========always========"
         }
         success{
