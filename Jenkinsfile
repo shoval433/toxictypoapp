@@ -64,9 +64,45 @@ pipeline{
             parallel{
             stage("testing"){ 
                 steps{
-                    sh "docker run --name testing --network ubuntu_default testing-img" 
+                    sh "docker run --name testing1 --network ubuntu_default -e FILE=e2e1 testing-img" 
                 }
             }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing2 --network ubuntu_default -e FILE=e2e2 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing3 --network ubuntu_default -e FILE=e2e3 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing4 --network ubuntu_default -e FILE=e2e4 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing5 --network ubuntu_default -e FILE=e2e5 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing6 --network ubuntu_default -e FILE=e2e6 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing7 --network ubuntu_default -e FILE=e2e7 testing-img" 
+                }
+            }
+            stage("testing"){ 
+                steps{
+                    sh "docker run --name testing8 --network ubuntu_default -e FILE=e2e8 testing-img" 
+                }
+            }
+
             }
         }
         stage("is deploy to prod"){
@@ -109,7 +145,7 @@ pipeline{
     }
     post{
         always{
-            sh "docker rm -f testing"
+            sh "docker rm -f testing1 testing2 testing3 testing4 testing5 testing6 testing7 testing8"
             echo "========always========"
         }
         success{
